@@ -1,4 +1,5 @@
-const mediaRoot = '/projects/work-import'
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? ''
+const mediaRoot = `${basePath}/projects/work-import`
 
 export const projects = [
   {

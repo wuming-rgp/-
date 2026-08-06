@@ -8,6 +8,8 @@ import './project-detail.css'
 import './home-background.css'
 import './personal-hero.css'
 import './work-import.css'
+import './content-protection.css'
+import ContentProtection from './components/ContentProtection'
 
 export const metadata = {
   title: '任国鹏 · 3D HMI Designer',
@@ -15,5 +17,5 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
-  return <html lang="zh-CN"><body>{children}</body></html>
+  return <html lang="zh-CN"><body><ContentProtection />{children}</body></html>
 }

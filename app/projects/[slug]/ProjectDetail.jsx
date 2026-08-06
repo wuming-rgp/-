@@ -23,7 +23,7 @@ function AutoPlayVideo({ src, label, className = '' }) {
     return () => observer.disconnect()
   }, [])
 
-  return <video ref={video} className={className} autoPlay muted loop playsInline controls preload="metadata" src={src} aria-label={label} />
+  return <video ref={video} className={className} autoPlay muted loop playsInline controls controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} preload="metadata" src={src} aria-label={label} />
 }
 
 function isVideoMedia(source) {
@@ -93,7 +93,7 @@ export default function ProjectDetail({ project }) {
       <div className="detail-hero-grid">
         <TiltedCard className={`detail-hero-image${project.heroVideo ? ' detail-hero-video' : ''}`} rotateAmplitude={1.5}>{project.heroVideo
           ? <AutoPlayVideo className="detail-hero-media" src={project.heroVideo} label={`${project.name} 项目主视觉视频`} />
-          : <img src={project.heroImage} alt={`${project.name} 项目主视觉`} />}</TiltedCard>
+          : <img src={project.heroImage} alt={`${project.name} 项目主视觉`} draggable={false} onContextMenu={(event) => event.preventDefault()} />}</TiltedCard>
         <div className="detail-hero-copy">
           <p>{project.summary}</p>
           <dl>
@@ -111,7 +111,7 @@ export default function ProjectDetail({ project }) {
         {project.gallery.map((media, index) => <TiltedCard className={`detail-gallery-card detail-reveal${isVideoMedia(media) ? ' detail-gallery-video-card' : ' detail-gallery-image-card'}`} rotateAmplitude={1.8} key={media}>
           {isVideoMedia(media)
             ? <AutoPlayVideo src={media} label={`${project.name} 作品视频 ${index + 1}`} />
-            : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} loading="lazy" />}
+            : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} loading="lazy" draggable={false} onContextMenu={(event) => event.preventDefault()} />}
           <figcaption>{String(index + 1).padStart(2, '0')}</figcaption>
         </TiltedCard>)}
       </div>
@@ -122,7 +122,7 @@ export default function ProjectDetail({ project }) {
       <div className="detail-video-grid">
         {project.videos.map((video, index) => <TiltedCard className="detail-video detail-reveal" rotateAmplitude={1.6} key={video}>
           <div className="detail-video-label"><span>{String(index + 1).padStart(2, '0')}</span><span>PLAY STUDY</span></div>
-          <video controls playsInline preload="metadata" src={video} aria-label={`${project.name} 动效视频 ${index + 1}`} />
+          <video controls playsInline controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} preload="metadata" src={video} aria-label={`${project.name} 动效视频 ${index + 1}`} />
         </TiltedCard>)}
       </div>
     </section>}
