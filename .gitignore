@@ -20,3 +20,5 @@ tmp/
 
 # Superseded source video retained locally only
 public/projects/work-import/3d-concept/06-light-show.mp4
+app/components/LightRays.jsx
+app/components/LightRays.css

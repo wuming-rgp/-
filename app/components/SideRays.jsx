@@ -98,6 +98,8 @@ void main() {
 
       const frag = `precision highp float;
 
+#define TIME_SCALE 10.0
+
 uniform float iTime;
 uniform vec2 iResolution;
 uniform float iSpeed;
@@ -116,11 +118,13 @@ uniform float iOpacity;
 float rayStrength(vec2 raySource, vec2 rayRefDirection, vec2 coord, float seedA, float seedB, float speed) {
   vec2 sourceToCoord = coord - raySource;
   float cosAngle = dot(normalize(sourceToCoord), rayRefDirection);
-  return clamp(
-    (0.45 + 0.15 * sin(cosAngle * seedA + iTime * speed)) +
-    (0.3 + 0.2 * cos(-cosAngle * seedB + iTime * speed)),
-    0.0, 1.0) *
-    clamp((iResolution.x - length(sourceToCoord)) / iResolution.x, 0.5, 1.0);
+  float baseStrength = clamp(
+    (0.45 + 0.15 * sin(cosAngle * seedA + iTime * speed * 0.35 * TIME_SCALE)) +
+    (0.3 + 0.2 * cos(-cosAngle * seedB + iTime * speed * 0.35 * TIME_SCALE)),
+    0.0, 1.0);
+  float distanceFade = clamp((iResolution.x - length(sourceToCoord)) / iResolution.x, 0.5, 1.0);
+  float flow = sin(cosAngle * 12.0 - iTime * 0.35 * TIME_SCALE);
+  return baseStrength * distanceFade * (1.0 + flow * 0.035);
 }
 
 void main() {
@@ -131,7 +135,8 @@ void main() {
   vec2 coord = vec2(fragCoord.x, iResolution.y - fragCoord.y);
   vec2 rayPos = vec2(iResolution.x * 1.1, -0.5 * iResolution.y);
 
-  float tiltRad = iTilt * 3.14159265 / 180.0;
+  float animatedTilt = iTilt + sin(iTime * 0.12 * TIME_SCALE) * 0.6;
+  float tiltRad = animatedTilt * 3.14159265 / 180.0;
   float cs = cos(tiltRad);
   float sn = sin(tiltRad);
   vec2 rel = coord - rayPos;
@@ -141,19 +146,20 @@ void main() {
   vec2 rayRefDir1 = normalize(vec2(cos(0.785398 + halfSpread), sin(0.785398 + halfSpread)));
   vec2 rayRefDir2 = normalize(vec2(cos(0.785398 - halfSpread), sin(0.785398 - halfSpread)));
 
-  vec4 rays1 = vec4(iRayColor1, 1.0) * rayStrength(rayPos, rayRefDir1, tiltedCoord, 36.2214, 21.11349, iSpeed);
-  vec4 rays2 = vec4(iRayColor2, 1.0) * rayStrength(rayPos, rayRefDir2, tiltedCoord, 22.3991, 18.0234, iSpeed * 0.2);
+  vec4 rays1 = vec4(iRayColor1, 1.0) * rayStrength(rayPos, rayRefDir1, tiltedCoord, 36.2214, 21.11349, iSpeed * 3.5);
+  vec4 rays2 = vec4(iRayColor2, 1.0) * rayStrength(rayPos, rayRefDir2, tiltedCoord, 22.3991, 18.0234, iSpeed * 1.8);
 
   vec4 color = rays1 * (1.0 - iBlend) * 0.9 + rays2 * iBlend * 0.9;
 
   float distanceToLight = length(fragCoord.xy - vec2(rayPos.x, iResolution.y - rayPos.y)) / iResolution.y;
   float brightness = iIntensity * 0.4 / pow(max(distanceToLight, 0.001), iFalloff);
-  color.rgb *= brightness;
+  float globalMotion = 0.92 + 0.08 * sin(iTime * 0.18 * TIME_SCALE);
+  color.rgb *= brightness * globalMotion;
 
   float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
   color.rgb = mix(vec3(gray), color.rgb, iSaturation);
 
-  color.a = max(color.r, max(color.g, color.b)) * iOpacity;
+  color.a = max(color.r, max(color.g, color.b)) * iOpacity * globalMotion;
   gl_FragColor = color;
 }`;
 

@@ -77,17 +77,17 @@ export default function Page() {
     <section className="hero" id="home">
       <nav className="nav-shell"><a className="brand" href="#home">REN<span>·</span>HMI</a><div className="nav-links"><a href="#about">关于我</a><a href="#work">精选项目</a><a href="#skills">专业能力</a></div><a className="nav-cta" href="mailto:1019431896@qq.com">联系我 <span>↗</span></a></nav>
       <SideRays
-        speed={0.18}
+          speed={0.1}
         rayColor1="#EAF2FF"
-        rayColor2="#A9BDDF"
-        intensity={1.8}
-        spread={2.4}
+        rayColor2="#AFC5E5"
+        intensity={2.2}
+        spread={2.8}
         origin="top-right"
         tilt={0}
-        saturation={0.55}
-        blend={0.78}
-        falloff={1.35}
-        opacity={0.48}
+        saturation={0.45}
+        blend={0.8}
+        falloff={1.4}
+        opacity={0.55}
         className="hero-side-rays"
       />
       <div className="hero__layout">
