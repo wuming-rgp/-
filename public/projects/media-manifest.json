@@ -1,0 +1,32 @@
+{
+  "source": "任国鹏_3DHMI设计师_0621.pptx",
+  "groups": {
+    "shared": {
+      "label": "封面与公共素材",
+      "path": "/projects/shared/",
+      "assets": ["image1.png", "image2.jpg"]
+    },
+    "concept-design": {
+      "label": "概念设计 / 3D Design",
+      "path": "/projects/concept-design/",
+      "slides": "04–13",
+      "assetRange": "image3–image15, media1–media8"
+    },
+    "motion-design": {
+      "label": "动效设计 / Motion Design",
+      "path": "/projects/motion-design/",
+      "slides": "14–26",
+      "assetRange": "image16–image42, media9–media19"
+    },
+    "3d-development": {
+      "label": "3D 开发 / 3D Development",
+      "path": "/projects/3d-development/",
+      "slides": "27–40",
+      "assetRange": "image43–image68, media20–media25"
+    }
+  },
+  "notes": [
+    "视频仅作为静态素材保存；在项目页面中按需加载，不应在首页预加载。",
+    "PPT 内 3 个 WDP 文件属于 Windows Photo 格式，浏览器不直接支持，暂未导入；需要时可转换为 WebP 或 PNG。"
+  ]
+}

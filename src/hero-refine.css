@@ -1,0 +1,74 @@
+/* Dark, high-contrast homepage refinement */
+.hero{
+  background:#08090b;
+  border:0;
+  padding:16px 18px 18px;
+}
+
+.hero-media{
+  inset:16px 18px 18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:34px;
+  background:#0d1015;
+}
+
+.hero-image{
+  background:
+    radial-gradient(ellipse at 77% 48%,rgba(169,221,255,.72) 0 2%,rgba(48,121,181,.46) 9%,rgba(16,32,51,.58) 19%,transparent 36%),
+    radial-gradient(ellipse at 77% 48%,transparent 0 18%,rgba(168,218,255,.5) 18.4% 18.7%,transparent 19.5% 27%,rgba(85,158,222,.28) 27.3% 27.7%,transparent 29%),
+    radial-gradient(circle at 84% 28%,rgba(83,169,235,.22),transparent 20%),
+    linear-gradient(115deg,#060709 2%,#0b0e13 54%,#06101b);
+  filter:none;
+  transform:scale(1.02);
+}
+
+.hero-image::after{
+  width:56vw;
+  height:56vw;
+  right:-17vw;
+  top:-10vw;
+  border-color:rgba(178,226,255,.25);
+  box-shadow:0 0 130px rgba(55,153,231,.19),inset 0 0 100px rgba(123,206,255,.08);
+  opacity:.9;
+}
+
+.hero-scrim{
+  display:block;
+  background:linear-gradient(90deg,rgba(4,5,7,.98) 0%,rgba(4,5,7,.94) 35%,rgba(4,5,7,.35) 65%,rgba(4,5,7,.13) 100%),linear-gradient(0deg,rgba(4,5,7,.65),transparent 48%);
+}
+
+.hero .nav{height:72px;border-bottom:1px solid rgba(255,255,255,.12)}
+.hero .brand,.hero .nav a{color:#f5f7f8}.hero .contact-pill{border-color:rgba(255,255,255,.64)}
+.hero .contact-pill:hover{background:#f2f5f7;color:#0b0d10}
+.hero .nav-links a:hover,.hero .brand:hover{opacity:.62}
+
+.hero-content{
+  height:calc(100% - 72px);
+  align-items:flex-start;
+  justify-content:center;
+  padding:0;
+  text-align:left;
+}
+
+.hero-content::before{
+  content:'';
+  position:absolute;
+  width:min(920px,65vw);
+  height:490px;
+  left:-80px;
+  top:50%;
+  transform:translateY(-50%);
+  background:radial-gradient(ellipse at 35% 45%,rgba(13,16,21,.62),rgba(5,6,8,.05) 68%);
+  pointer-events:none;
+}
+
+.hero-content > *{position:relative;z-index:1}
+.hero .eyebrow{color:#acb1b6;margin:0 0 21px}.hero .eyebrow span{color:#bde4ff}
+.hero h1{color:#f4f6f7;font-size:clamp(86px,10vw,182px);line-height:.78;letter-spacing:-.1em;text-shadow:none}
+.hero h1 em{color:#bde4ff;font-weight:300;letter-spacing:-.105em}
+.hero-bottom{left:0;right:0;bottom:38px;padding:0;margin:0;max-width:none}.hero-bottom p{color:#c8cdd1;font-size:12px;line-height:1.8}.hero .scroll{color:#edf0f2}.hero .scroll b{color:#bde4ff}
+
+@media(max-width:800px){
+  .hero{padding:10px;min-height:680px}.hero-media{inset:10px;border-radius:22px}.hero .nav{height:64px}.hero-content{height:calc(100% - 64px)}.hero-content::before{width:120%;left:-20%;height:360px}.hero h1{font-size:18vw}.hero-image{background-position:70% center}.hero-bottom{bottom:24px}.hero-bottom p{max-width:180px}.hero .contact-pill{font-size:9px}
+}

@@ -1,0 +1,210 @@
+/* E:\work import: media always keeps its own intrinsic aspect ratio. */
+.project-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:none;
+  gap:20px;
+}
+.project-card:nth-child(n){grid-column:auto;grid-row:auto}
+.project-image,.project-card:first-child .project-image,.project-card:nth-child(3) .project-image{
+  height:360px;
+  background:#05070d;
+}
+.project-image img,.project-image video{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  background:#05070d;
+  transition:transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.project-card:hover .project-image video{transform:scale(1.025)}
+
+/* Detail hero uses the source media's natural height — never a fixed crop. */
+.detail-hero-image,
+.detail-hero-video{
+  aspect-ratio:auto!important;
+  align-self:start;
+  background:#05070d;
+}
+.detail-hero-image img,
+.detail-hero-image video,
+.detail-hero-video .detail-hero-media{
+  width:100%;
+  height:auto!important;
+  display:block;
+  object-fit:contain!important;
+  background:#05070d;
+}
+
+/* Every gallery item is allowed to determine its height from the original file. */
+.detail-media-gallery{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;
+}
+.detail-media-gallery .detail-gallery-card:nth-child(n){
+  width:100%;
+  grid-column:auto;
+  aspect-ratio:auto!important;
+  align-self:start;
+  background:#05070d;
+}
+/* Motion-detail editorial order: 05 is the full-width feature; 08 + 06 form
+   the following two-column row; 09 + 10 remain paired afterwards. */
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(1){order:1}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(2){order:2}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(3){order:3}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(4){order:4}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(5){order:5}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(8){order:6}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(6){order:7}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(7){order:8}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(9){order:9}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(10){order:10}
+
+/* Featured 05 spans the same complete content width as the two cards below. */
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(5){
+  grid-column:1 / -1!important;
+  width:100%!important;
+  align-self:start;
+  aspect-ratio:auto!important;
+}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(5)>.card-surface,
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(5) .card-content{
+  height:auto;
+  min-height:0;
+}
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(5) video{
+  display:block;
+  width:100%;
+  height:auto!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+}
+
+/* Number 07 remains an editorial full-width moment. */
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(7){
+  grid-column:1 / -1;
+  width:100%;
+}
+/* 08 and 06 use the normal two-column grid; no centring or manual offset. */
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(8),
+[data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(6){
+  grid-column:span 1!important;
+  width:100%!important;
+  min-width:0;
+  justify-self:stretch;
+}
+.detail-media-gallery .detail-gallery-card img,
+.detail-media-gallery .detail-gallery-card video{
+  width:100%;
+  height:auto!important;
+  display:block;
+  object-fit:contain!important;
+  background:#05070d;
+}
+
+@media(max-width:800px){
+  .project-grid{grid-template-columns:1fr}
+  .project-image,.project-card:first-child .project-image,.project-card:nth-child(3) .project-image{height:250px}
+}
+@media(max-width:900px){
+  .detail-media-gallery{grid-template-columns:1fr}
+  [data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(n){
+    grid-column:1!important;
+    width:100%!important;
+  }
+}
+
+/* The three experience figures are intentionally separate glass cards. */
+.stats{
+  gap:16px!important;
+  border:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+.stats>.card-wrapper{
+  min-height:152px!important;
+  padding:0!important;
+  border-radius:20px!important;
+  background:transparent!important;
+}
+.stats>.card-wrapper>.interactive-card{
+  min-height:152px!important;
+  padding:0!important;
+  border-radius:20px!important;
+  background:rgba(10,12,18,.75)!important;
+}
+.stats>.card-wrapper>.interactive-card>.content{
+  min-height:0!important;
+  padding:25px 27px!important;
+  border:0!important;
+  border-radius:inherit!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Equal footprint for all four capabilities. */
+.skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-auto-rows:280px;gap:18px!important}
+.skill-card:nth-child(n){grid-column:auto!important;min-height:280px!important}
+
+/* A calmer, aligned final screen: copy and contact information share one center line. */
+.contact-inner{
+  grid-template-columns:minmax(0,1.35fr) 340px!important;
+  column-gap:clamp(70px,8vw,150px)!important;
+}
+.contact-inner>p{
+  align-self:center!important;
+  margin:0 0 174px!important;
+}
+.contact-inner>a{
+  align-self:center!important;
+  margin:110px 0 0!important;
+  max-width:900px;
+  line-height:.98!important;
+  letter-spacing:-.045em!important;
+}
+.contact-inner>a span{display:inline-block;margin-top:.18em}
+.contact-inner::after{content:none!important;display:none!important}
+.contact-card{
+  grid-column:2;
+  grid-row:2;
+  align-self:center!important;
+  justify-self:end;
+  width:320px;
+  height:320px!important;
+  min-height:0!important;
+}
+.contact-card>.card-surface{
+  height:320px!important;
+  min-height:0!important;
+  border-radius:24px!important;
+}
+.contact-card-link{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-start;
+  gap:14px;
+  width:100%;
+  height:100%;
+  min-height:0!important;
+  padding:30px;
+  color:#e8eff8;
+  text-decoration:none;
+}
+.contact-card-link>span{color:var(--lime);font:500 11px 'DM Mono',monospace;letter-spacing:.08em}
+.contact-card-link strong{margin-top:18px;font:500 12px 'DM Mono',monospace;letter-spacing:.02em}
+.contact-card-link small{font:10px 'DM Mono',monospace;letter-spacing:.07em;color:#adb9c9}
+.contact-card-link em{margin-top:auto;color:#b9c9ff;font:10px 'DM Mono',monospace;font-style:normal;letter-spacing:.07em}
+
+@media(max-width:800px){
+  .stats{gap:10px!important}
+  .stats>.card-wrapper,.stats>.card-wrapper>.interactive-card{min-height:122px!important}
+  .stats>.card-wrapper>.interactive-card>.content{padding:18px 14px!important}
+  .skill-grid{grid-template-columns:1fr!important;grid-auto-rows:auto}
+  .skill-card:nth-child(n){min-height:230px!important}
+  .contact-inner>p,.contact-inner>a{margin:0!important}
+  .contact-card{width:100%;height:250px!important;min-height:0!important;margin-top:32px}
+  .contact-card>.card-surface{height:250px!important}
+  .contact-card-link{min-height:0!important}
+}

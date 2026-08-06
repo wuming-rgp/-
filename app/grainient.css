@@ -1,0 +1,27 @@
+/* The animated field belongs to Hero only. The approved still remains the base
+   behind the rest of the homepage so later sections keep their existing look. */
+html,
+body {
+  background: #03030b;
+}
+
+main {
+  position: relative;
+  isolation: isolate;
+}
+
+main > section {
+  position: relative;
+  z-index: 2;
+}
+
+main:not(.project-detail-page) > section {
+  background: transparent !important;
+}
+
+.portrait-frame,
+.project-card,
+.stats > div,
+.skill-card {
+  backdrop-filter: blur(8px);
+}

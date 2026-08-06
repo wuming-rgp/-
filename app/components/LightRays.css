@@ -1,0 +1,26 @@
+.light-rays-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.light-rays-container canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hero-light-rays {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: var(--side-rays-opacity, 0.55);
+  mix-blend-mode: screen;
+}
