@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Deployment metadata
+.vercel/
+
+# Logs
+*.log
+
+# Local environment files (keep the documented template)
+.env*
+!.env.example
+
+# Local working files and imported tooling
+tmp/
+
+# Superseded source video retained locally only
+public/projects/work-import/3d-concept/06-light-show.mp4

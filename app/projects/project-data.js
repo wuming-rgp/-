@@ -19,7 +19,7 @@ export const projects = [
       `${mediaRoot}/3d-concept/03-climate.mp4`,
       `${mediaRoot}/3d-concept/04-charging.mp4`,
       `${mediaRoot}/3d-concept/05-charging-detail.mp4`,
-      `${mediaRoot}/3d-concept/06-light-show.mp4`,
+      `${mediaRoot}/3d-concept/06-light-show-web.mp4`,
       `${mediaRoot}/3d-concept/07-voyah.mp4`,
     ],
     videos: [],
