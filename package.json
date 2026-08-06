@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cloudflare": "node scripts/clean-cloudflare-output.mjs && next build && node scripts/prepare-cloudflare-output.mjs",
     "start": "next start"
   },
   "dependencies": {
