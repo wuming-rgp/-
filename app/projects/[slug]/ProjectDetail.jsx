@@ -85,7 +85,7 @@ export default function ProjectDetail({ project }) {
 
   return <main className="project-detail-page" data-project={project.slug} ref={page}>
     <div className="project-detail-background" aria-hidden="true" />
-    <ProjectDock />
+    <ProjectDock activeSlug={project.slug} />
 
     <section className="detail-hero detail-shell">
       <div className="detail-hero-meta"><span>{project.eyebrow}</span><span>{project.year}</span></div>

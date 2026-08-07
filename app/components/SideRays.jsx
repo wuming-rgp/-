@@ -159,7 +159,13 @@ void main() {
   float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
   color.rgb = mix(vec3(gray), color.rgb, iSaturation);
 
-  color.a = max(color.r, max(color.g, color.b)) * iOpacity * globalMotion;
+  // The procedural field has a low non-zero floor outside the visible rays.
+  // Remove that floor before compositing so the canvas cannot wash the whole
+  // hero with a translucent grey veil on production GPUs.
+  float rayLuminance = max(color.r, max(color.g, color.b));
+  float rayVisibility = smoothstep(0.16, 0.52, rayLuminance);
+  color.rgb *= rayVisibility;
+  color.a = rayVisibility * iOpacity * 0.46 * globalMotion;
   gl_FragColor = color;
 }`;
 

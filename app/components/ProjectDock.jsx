@@ -1,12 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { projects } from '../projects/project-data'
 
-export default function ProjectDock() {
-  const pathname = usePathname()
-
+export default function ProjectDock({ activeSlug }) {
   const resetScroll = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
   }
@@ -18,7 +15,7 @@ export default function ProjectDock() {
       <div className="detail-nav-tabs project-dock__navigation" aria-label="项目切换">
         {projects.map((project) => {
           const projectPath = `/projects/${project.slug}`
-          const isActive = pathname === projectPath
+          const isActive = activeSlug === project.slug
 
           return (
             <Link
