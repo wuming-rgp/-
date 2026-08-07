@@ -48,6 +48,25 @@
   align-self:start;
   background:#05070d;
 }
+
+/* The opening 3D Concept motion is the editorial feature: it uses the full
+   detail-shell width while the remaining media keeps the existing two-column
+   rhythm. The video itself still defines the card height from its source
+   aspect ratio, so there is no crop or stretch. */
+[data-project='3d-concept'] .detail-media-gallery>.detail-gallery-card:first-child{
+  grid-column:1 / -1!important;
+  width:100%!important;
+}
+[data-project='3d-concept'] .detail-media-gallery>.detail-gallery-card:first-child>.card-surface,
+[data-project='3d-concept'] .detail-media-gallery>.detail-gallery-card:first-child .card-content{
+  height:auto;
+  min-height:0;
+}
+[data-project='3d-concept'] .detail-media-gallery>.detail-gallery-card:first-child video{
+  width:100%;
+  height:auto!important;
+  object-fit:contain!important;
+}
 /* Motion-detail editorial order: 05 is the full-width feature; 08 + 06 form
    the following two-column row; 09 + 10 remain paired afterwards. */
 [data-project='motion-design'] .detail-media-gallery>.detail-gallery-card:nth-child(1){order:1}

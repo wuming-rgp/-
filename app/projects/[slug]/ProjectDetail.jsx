@@ -7,7 +7,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltedCard from '../../components/TiltedCard'
 import ProjectDock from '../../components/ProjectDock'
 
-function AutoPlayVideo({ src, label, className = '' }) {
+function refreshScrollMeasurements() {
+  requestAnimationFrame(() => ScrollTrigger.refresh())
+}
+
+function AutoPlayVideo({ src, label, className = '', onReady }) {
   const video = useRef(null)
 
   useEffect(() => {
@@ -23,7 +27,7 @@ function AutoPlayVideo({ src, label, className = '' }) {
     return () => observer.disconnect()
   }, [])
 
-  return <video ref={video} className={className} autoPlay muted loop playsInline controls controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} preload="metadata" src={src} aria-label={label} />
+  return <video ref={video} className={className} autoPlay muted loop playsInline controls controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} onLoadedMetadata={onReady} preload="metadata" src={src} aria-label={label} />
 }
 
 function isVideoMedia(source) {
@@ -92,8 +96,8 @@ export default function ProjectDetail({ project }) {
       <h1 className="detail-title">{project.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
       <div className="detail-hero-grid">
         <TiltedCard className={`detail-hero-image${project.heroVideo ? ' detail-hero-video' : ''}`} rotateAmplitude={1.5}>{project.heroVideo
-          ? <AutoPlayVideo className="detail-hero-media" src={project.heroVideo} label={`${project.name} 项目主视觉视频`} />
-          : <img src={project.heroImage} alt={`${project.name} 项目主视觉`} draggable={false} onContextMenu={(event) => event.preventDefault()} />}</TiltedCard>
+          ? <AutoPlayVideo className="detail-hero-media" src={project.heroVideo} label={`${project.name} 项目主视觉视频`} onReady={refreshScrollMeasurements} />
+          : <img src={project.heroImage} alt={`${project.name} 项目主视觉`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}</TiltedCard>
         <div className="detail-hero-copy">
           <p>{project.summary}</p>
           <dl>
@@ -110,8 +114,8 @@ export default function ProjectDetail({ project }) {
       <div className="detail-gallery detail-media-gallery">
         {project.gallery.map((media, index) => <TiltedCard className={`detail-gallery-card detail-reveal${isVideoMedia(media) ? ' detail-gallery-video-card' : ' detail-gallery-image-card'}`} rotateAmplitude={1.8} key={media}>
           {isVideoMedia(media)
-            ? <AutoPlayVideo src={media} label={`${project.name} 作品视频 ${index + 1}`} />
-            : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} loading="lazy" draggable={false} onContextMenu={(event) => event.preventDefault()} />}
+            ? <AutoPlayVideo src={media} label={`${project.name} 作品视频 ${index + 1}`} onReady={refreshScrollMeasurements} />
+            : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} loading={project.slug === '3d-assets' ? 'eager' : 'lazy'} decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}
           <figcaption>{String(index + 1).padStart(2, '0')}</figcaption>
         </TiltedCard>)}
       </div>
