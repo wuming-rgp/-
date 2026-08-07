@@ -7,8 +7,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltedCard from '../../components/TiltedCard'
 import ProjectDock from '../../components/ProjectDock'
 
+let scrollRefreshFrame = null
+
 function refreshScrollMeasurements() {
-  requestAnimationFrame(() => ScrollTrigger.refresh())
+  if (scrollRefreshFrame !== null) return
+
+  scrollRefreshFrame = requestAnimationFrame(() => {
+    scrollRefreshFrame = null
+    ScrollTrigger.refresh()
+  })
 }
 
 function AutoPlayVideo({ src, label, className = '', onReady, priority = false }) {
@@ -118,7 +125,7 @@ export default function ProjectDetail({ project }) {
         {project.gallery.map((media, index) => <TiltedCard className={`detail-gallery-card detail-reveal${isVideoMedia(media) ? ' detail-gallery-video-card' : ' detail-gallery-image-card'}`} rotateAmplitude={1.8} key={media}>
           {isVideoMedia(media)
             ? <AutoPlayVideo src={media} label={`${project.name} 作品视频 ${index + 1}`} onReady={refreshScrollMeasurements} />
-            : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} loading={project.slug === '3d-assets' ? 'eager' : 'lazy'} decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}
+            : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} loading="lazy" decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}
           <figcaption>{String(index + 1).padStart(2, '0')}</figcaption>
         </TiltedCard>)}
       </div>

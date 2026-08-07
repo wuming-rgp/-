@@ -4,10 +4,6 @@ import Link from 'next/link'
 import { projects } from '../projects/project-data'
 
 export default function ProjectDock({ activeSlug }) {
-  const resetScroll = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-  }
-
   return (
     <nav className="project-detail-nav" aria-label="项目详情导航">
       <Link className="detail-brand" href="/">REN <span>·</span> HMI</Link>
@@ -24,7 +20,6 @@ export default function ProjectDock({ activeSlug }) {
               className={`project-dock__item${isActive ? ' project-dock__item--active' : ''}`}
               aria-current={isActive ? 'page' : undefined}
               scroll
-              onClick={resetScroll}
             >
               <span className="project-dock__index">{project.number}</span>
               <span className="project-dock__label">{project.name}</span>
