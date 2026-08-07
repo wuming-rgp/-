@@ -11,7 +11,7 @@ function refreshScrollMeasurements() {
   requestAnimationFrame(() => ScrollTrigger.refresh())
 }
 
-function AutoPlayVideo({ src, label, className = '', onReady }) {
+function AutoPlayVideo({ src, label, className = '', onReady, priority = false }) {
   const video = useRef(null)
 
   useEffect(() => {
@@ -21,13 +21,16 @@ function AutoPlayVideo({ src, label, className = '', onReady }) {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) element.play().catch(() => {})
       else element.pause()
-    }, { threshold: 0.2 })
+    }, {
+      rootMargin: '180px 0px',
+      threshold: 0.01,
+    })
 
     observer.observe(element)
     return () => observer.disconnect()
   }, [])
 
-  return <video ref={video} className={className} autoPlay muted loop playsInline controls controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} onLoadedMetadata={onReady} preload="metadata" src={src} aria-label={label} />
+  return <video ref={video} className={className} muted loop playsInline controls controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} onLoadedMetadata={onReady} preload={priority ? 'metadata' : 'none'} src={src} aria-label={label} />
 }
 
 function isVideoMedia(source) {
@@ -96,7 +99,7 @@ export default function ProjectDetail({ project }) {
       <h1 className="detail-title">{project.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
       <div className="detail-hero-grid">
         <TiltedCard className={`detail-hero-image${project.heroVideo ? ' detail-hero-video' : ''}`} rotateAmplitude={1.5}>{project.heroVideo
-          ? <AutoPlayVideo className="detail-hero-media" src={project.heroVideo} label={`${project.name} 项目主视觉视频`} onReady={refreshScrollMeasurements} />
+          ? <AutoPlayVideo className="detail-hero-media" src={project.heroVideo} label={`${project.name} 项目主视觉视频`} onReady={refreshScrollMeasurements} priority />
           : <img src={project.heroImage} alt={`${project.name} 项目主视觉`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}</TiltedCard>
         <div className="detail-hero-copy">
           <p>{project.summary}</p>

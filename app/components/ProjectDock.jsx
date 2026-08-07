@@ -1,12 +1,20 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { projects } from '../projects/project-data'
 
 export default function ProjectDock({ activeSlug }) {
-  const resetScroll = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-  }
+  const router = useRouter()
+
+  useEffect(() => {
+    projects.forEach((project) => {
+      if (project.slug !== activeSlug) {
+        router.prefetch(`/projects/${project.slug}`)
+      }
+    })
+  }, [activeSlug, router])
 
   return (
     <nav className="project-detail-nav" aria-label="项目详情导航">
@@ -21,10 +29,12 @@ export default function ProjectDock({ activeSlug }) {
             <Link
               key={project.slug}
               href={projectPath}
+              prefetch
               className={`project-dock__item${isActive ? ' project-dock__item--active' : ''}`}
               aria-current={isActive ? 'page' : undefined}
               scroll
-              onClick={resetScroll}
+              onPointerEnter={() => router.prefetch(projectPath)}
+              onFocus={() => router.prefetch(projectPath)}
             >
               <span className="project-dock__index">{project.number}</span>
               <span className="project-dock__label">{project.name}</span>
