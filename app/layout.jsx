@@ -5,10 +5,13 @@ import './scroll-motion.css'
 import './agency-layout.css'
 import './final-polish.css'
 import './project-detail.css'
+import './media-lightbox.css'
 import './home-background.css'
 import './personal-hero.css'
 import './work-import.css'
 import './content-protection.css'
+import './profile.css'
+import './minimum-type.css'
 import ContentProtection from './components/ContentProtection'
 
 export const metadata = {

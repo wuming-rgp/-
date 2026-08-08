@@ -1,11 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TiltedCard from '../../components/TiltedCard'
 import ProjectDock from '../../components/ProjectDock'
+import MediaLightbox from '../../components/MediaLightbox'
+import Grainient from '../../components/Grainient'
 
 let scrollRefreshFrame = null
 
@@ -44,8 +46,33 @@ function isVideoMedia(source) {
   return /\.(mp4|webm|mov)(?:$|\?)/i.test(source)
 }
 
+function ExpandMediaButton({ onClick }) {
+  return <button className="detail-media-expand" type="button" onClick={(event) => {
+    event.stopPropagation()
+    onClick()
+  }} aria-label="放大查看">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <path d="M7.5 3.5h-4v4M12.5 3.5h4v4M7.5 16.5h-4v-4M12.5 16.5h4v-4" />
+    </svg>
+  </button>
+}
+
 export default function ProjectDetail({ project }) {
   const page = useRef(null)
+  const [lightboxMedia, setLightboxMedia] = useState(null)
+  const closeLightbox = useCallback(() => setLightboxMedia(null), [])
+
+  const openMedia = useCallback((src, type, label, options = {}) => {
+    setLightboxMedia({ src, type, label, ...options })
+  }, [])
+
+  const handleCardClick = useCallback((event, media) => {
+    if (event.target instanceof HTMLVideoElement) {
+      const rect = event.target.getBoundingClientRect()
+      if (event.clientY >= rect.bottom - 58) return
+    }
+    openMedia(media.src, media.type, media.label, media.options)
+  }, [openMedia])
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -98,14 +125,24 @@ export default function ProjectDetail({ project }) {
   }, [project.slug])
 
   return <main className="project-detail-page" data-project={project.slug} ref={page}>
-    <div className="project-detail-background" aria-hidden="true" />
+    <div className="site__grainient project-detail-grainient" aria-hidden="true">
+      <Grainient color1="#c67dff" color2="#2421bf" color3="#5172fc" timeSpeed={0.25} colorBalance={-0.21} warpStrength={1.0} warpFrequency={5.0} warpSpeed={2.0} warpAmplitude={50.0} blendAngle={0.0} blendSoftness={0.6} rotationAmount={500.0} noiseScale={2.0} grainAmount={0.01} grainScale={2.0} grainAnimated={false} contrast={1.8} gamma={0.45} saturation={0.2} centerX={0.0} centerY={0.0} zoom={1} />
+    </div>
+    <div className="site__background-mask project-detail-background-mask" aria-hidden="true" />
     <ProjectDock activeSlug={project.slug} />
 
     <section className="detail-hero detail-shell">
       <div className="detail-hero-meta"><span>{project.eyebrow}</span><span>{project.year}</span></div>
       <h1 className="detail-title">{project.title.split('\n').map((line) => <span key={line}>{line}</span>)}</h1>
       <div className="detail-hero-grid">
-        <TiltedCard className={`detail-hero-image${project.heroVideo ? ' detail-hero-video' : ''}`} rotateAmplitude={1.5}>{project.heroVideo
+        <TiltedCard className={`detail-hero-image${project.heroVideo ? ' detail-hero-video' : ''}`} rotateAmplitude={1.5} onClick={(event) => handleCardClick(event, {
+          src: project.heroVideo || project.heroImage,
+          type: project.heroVideo ? 'video' : 'image',
+          label: `${project.name} 项目主视觉`,
+          options: project.heroVideo ? { muted: true, loop: true } : {},
+        })}>
+          <ExpandMediaButton onClick={() => openMedia(project.heroVideo || project.heroImage, project.heroVideo ? 'video' : 'image', `${project.name} 项目主视觉`, project.heroVideo ? { muted: true, loop: true } : {})} />
+          {project.heroVideo
           ? <AutoPlayVideo className="detail-hero-media" src={project.heroVideo} label={`${project.name} 项目主视觉视频`} onReady={refreshScrollMeasurements} priority />
           : <img src={project.heroImage} alt={`${project.name} 项目主视觉`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}</TiltedCard>
         <div className="detail-hero-copy">
@@ -120,9 +157,15 @@ export default function ProjectDetail({ project }) {
     </section>
 
     {project.gallery.length > 0 && <section className="detail-section detail-shell">
-      <div className="detail-section-heading detail-reveal"><span>01 · SELECTED MEDIA</span><h2>把每一个状态，<br /><em>变成可感知的体验。</em></h2></div>
+      <div className="detail-section-heading detail-reveal"><span>01 · SELECTED MEDIA</span><h2>{project.mediaHeading[0]}<br /><em>{project.mediaHeading[1]}</em></h2></div>
       <div className="detail-gallery detail-media-gallery">
-        {project.gallery.map((media, index) => <TiltedCard className={`detail-gallery-card detail-reveal${isVideoMedia(media) ? ' detail-gallery-video-card' : ' detail-gallery-image-card'}`} rotateAmplitude={1.8} key={media}>
+        {project.gallery.map((media, index) => <TiltedCard className={`detail-gallery-card detail-reveal${isVideoMedia(media) ? ' detail-gallery-video-card' : ' detail-gallery-image-card'}`} rotateAmplitude={1.8} key={media} onClick={(event) => handleCardClick(event, {
+          src: media,
+          type: isVideoMedia(media) ? 'video' : 'image',
+          label: `${project.name} 作品 ${index + 1}`,
+          options: isVideoMedia(media) ? { muted: true, loop: true } : {},
+        })}>
+          <ExpandMediaButton onClick={() => openMedia(media, isVideoMedia(media) ? 'video' : 'image', `${project.name} 作品 ${index + 1}`, isVideoMedia(media) ? { muted: true, loop: true } : {})} />
           {isVideoMedia(media)
             ? <AutoPlayVideo src={media} label={`${project.name} 作品视频 ${index + 1}`} onReady={refreshScrollMeasurements} />
             : <img className="detail-gallery-image" src={media} alt={`${project.name} 作品画面 ${index + 1}`} width={project.slug === '3d-assets' ? 1280 : undefined} height={project.slug === '3d-assets' ? 720 : undefined} loading="lazy" decoding="async" onLoad={refreshScrollMeasurements} draggable={false} onContextMenu={(event) => event.preventDefault()} />}
@@ -134,12 +177,20 @@ export default function ProjectDetail({ project }) {
     {project.videos.length > 0 && <section className="detail-section detail-shell detail-motion-section">
       <div className="detail-section-heading detail-reveal"><span>02 · MOTION STUDIES</span><h2>让视觉语言<br /><em>开始流动。</em></h2></div>
       <div className="detail-video-grid">
-        {project.videos.map((video, index) => <TiltedCard className="detail-video detail-reveal" rotateAmplitude={1.6} key={video}>
+        {project.videos.map((video, index) => <TiltedCard className="detail-video detail-reveal" rotateAmplitude={1.6} key={video} onClick={(event) => handleCardClick(event, {
+          src: video,
+          type: 'video',
+          label: `${project.name} 动效视频 ${index + 1}`,
+          options: { muted: false, loop: false },
+        })}>
+          <ExpandMediaButton onClick={() => openMedia(video, 'video', `${project.name} 动效视频 ${index + 1}`, { muted: false, loop: false })} />
           <div className="detail-video-label"><span>{String(index + 1).padStart(2, '0')}</span><span>PLAY STUDY</span></div>
           <video controls playsInline controlsList="nodownload noremoteplayback" disablePictureInPicture draggable={false} onContextMenu={(event) => event.preventDefault()} preload="metadata" src={video} aria-label={`${project.name} 动效视频 ${index + 1}`} />
         </TiltedCard>)}
       </div>
     </section>}
+
+    <MediaLightbox media={lightboxMedia} onClose={closeLightbox} />
 
     <footer className="detail-footer detail-shell">
       <p>任国鹏 · 3D HMI 动效设计师</p>

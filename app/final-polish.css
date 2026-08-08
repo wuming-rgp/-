@@ -20,6 +20,17 @@
 
 @media(max-width:800px){.hero{z-index:100!important}.nav-links a{padding:6px 8px;border-radius:7px;font-size:9px}.hero-title{letter-spacing:-.07em}.section-title-english,.work h2{letter-spacing:-.055em}}
 
+/* Dock typography test: add 2px without changing dock geometry. */
+.nav-shell .brand{font-size:16px}
+.nav-shell .nav-links a,
+.nav-shell .nav-cta{font-size:13px}
+.nav-shell .nav-cta span{font-size:19px}
+
+@media(max-width:800px){
+  .nav-shell .brand,
+  .nav-shell .nav-cta{font-size:13px}
+}
+
 /* Contact: calm, ordered closing screen without the oversized decorative rings. */
 .contact-halo{display:none!important}
 .contact{min-height:100svh}
@@ -31,3 +42,18 @@
 .contact-inner::after{grid-column:2;grid-row:2;align-self:center;justify-self:end;width:340px;min-height:294px;margin:0;padding:32px;background:linear-gradient(145deg,rgba(21,29,35,.78),rgba(8,12,18,.8));border-color:rgba(208,223,255,.2);box-shadow:inset 0 1px rgba(255,255,255,.08),0 20px 60px rgba(0,0,0,.18)}
 .contact-inner .footer{grid-column:1 / -1;grid-row:3;align-self:end;margin:0;padding-top:18px}
 @media(max-width:800px){.contact-inner{display:flex!important;min-height:720px;padding:105px 0 25px!important}.contact-inner>p{margin:30px 0 0}.contact-inner>a{margin:0;font-size:15vw}.contact-inner::after{width:auto;margin:36px 0 0}.contact-inner .footer{margin-top:auto}}
+
+/* Match the About pills to the cool lavender accent used in the heading. */
+.about .pill-row>*{border-color:rgba(185,201,255,.25);font-size:13px}
+.about .pill-row a{color:#d9e1e5;border-color:rgba(185,201,255,.25)}
+.about .pill-row a:hover{color:#071016;background:var(--lime);border-color:var(--lime)}
+
+/* Lift the small supporting type in About by 2px without changing layout. */
+.about>.eyebrow,
+.about .portrait-frame span,
+.about .stats span{font-size:12px}
+.about .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+@media(max-width:800px){
+  .about .stats span{font-size:10px}
+}

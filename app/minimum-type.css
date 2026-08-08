@@ -1,0 +1,116 @@
+/* Site-wide readability floor: no supporting copy is rendered below 13px. */
+.nav-links a,
+.nav-cta,
+.hero-meta,
+.hero-subtitle,
+.hero-foot,
+.eyebrow,
+.portrait-frame span,
+.pill-row>*,
+.stats span,
+.work-heading p,
+.project-image span,
+.project-info p,
+.skills-heading p,
+.skill-no,
+.skill-card p,
+.contact-inner>p,
+.contact-inner::after,
+.footer,
+.media-lightbox__caption,
+.hero-explore,
+.profile-kicker,
+.profile-contact-list>*,
+.profile-portrait-card__caption small,
+.profile-metrics span,
+.profile-section-heading>p,
+.profile-section-heading>div>p,
+.profile-education>div>p,
+.profile-section-heading--split>p,
+.profile-card-label,
+.profile-strength-card p,
+.profile-career-card__meta time,
+.profile-career-card__main>p,
+.profile-career-card__main strong,
+.profile-career-card li,
+.profile-career-card li::before,
+.profile-project-card__top,
+.profile-project-card__body p,
+.profile-tags span,
+.profile-education>div>span,
+.profile-education__cta a,
+.profile-footer,
+.detail-brand,
+.detail-back,
+.detail-nav-tabs a,
+.detail-nav-tabs .project-dock__item,
+.project-dock__index,
+.detail-hero-meta,
+.detail-hero-copy dt,
+.detail-hero-copy dd,
+.detail-tags span,
+.detail-section-heading>span,
+.detail-gallery-card figcaption,
+.detail-video-label,
+.detail-footer,
+.contact-card-link>span,
+.contact-card-link strong,
+.contact-card-link small,
+.contact-card-link em{
+  font-size:13px;
+}
+
+/* Two balanced metric cards: compact horizontal hierarchy, equal breathing room. */
+.about .stats{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  overflow:visible;
+  border:0;
+  background:transparent;
+}
+.about .stats>.interactive-specular-card{
+  min-height:128px!important;
+}
+.about .stats>.interactive-specular-card>.card-surface>.card-content{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:center;
+  column-gap:28px;
+  min-height:128px!important;
+  padding:24px 28px!important;
+  border:0!important;
+}
+.about .stats strong{
+  margin:0;
+  font-size:48px;
+  line-height:1;
+}
+.about .stats span{
+  display:flex;
+  align-items:center;
+  align-self:stretch;
+  margin:0;
+  padding:0 0 0 28px;
+  border:0;
+  border-left:1px solid rgba(185,201,255,.14);
+  border-radius:0;
+  color:#b9c4d1;
+  line-height:1.55;
+}
+
+@media(max-width:800px){
+  .about .stats{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .about .stats>.interactive-specular-card,
+  .about .stats>.interactive-specular-card>.card-surface>.card-content{
+    min-height:108px!important;
+  }
+  .about .stats>.interactive-specular-card>.card-surface>.card-content{
+    column-gap:20px;
+    padding:20px!important;
+  }
+  .about .stats strong{font-size:40px}
+  .about .stats span{padding-left:20px}
+}

@@ -88,10 +88,12 @@ function registerCard(card) {
 export default function InteractiveSpecularCard({
   children,
   className = '',
+  style,
   borderRadius = 28,
   radius,
   rotateAmplitude = 0,
   edgeDetectionRange = 40,
+  ...rootProps
 }) {
   const wrapperRef = useRef(null)
   const surfaceRef = useRef(null)
@@ -231,6 +233,7 @@ export default function InteractiveSpecularCard({
 
   return (
     <div
+      {...rootProps}
       ref={wrapperRef}
       className={`card-wrapper interactive-specular-card ${className}`}
       style={{
@@ -241,6 +244,7 @@ export default function InteractiveSpecularCard({
         '--tilt-x': '0deg',
         '--tilt-y': '0deg',
         '--tilt-scale': 1,
+        ...style,
       }}
     >
       <div ref={surfaceRef} className="card-surface">

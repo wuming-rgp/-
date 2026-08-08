@@ -114,3 +114,38 @@
 
 /* A disciplined, equal-width video wall while retaining every source frame. */
 .detail-video-gallery{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.detail-video-gallery .detail-gallery-video-card:nth-child(n){width:100%;grid-column:auto;aspect-ratio:16 / 9!important}.detail-video-gallery .detail-gallery-video-card video{width:100%;height:100%;object-fit:contain}.detail-video-gallery .detail-gallery-video-card:nth-last-child(1):nth-child(odd){width:calc(50% - 9px);grid-column:1 / -1;justify-self:center}@media(max-width:800px){.detail-video-gallery{grid-template-columns:1fr}.detail-video-gallery .detail-gallery-video-card:nth-child(n){width:100%;grid-column:auto}.detail-video-gallery .detail-gallery-video-card:nth-last-child(1):nth-child(odd){width:100%;grid-column:auto}}
+
+/* Keep every project detail page on the same uninterrupted Grainient field as home. */
+.project-detail-page{
+  background:transparent;
+}
+.project-detail-page::before,
+.project-detail-background{
+  display:none;
+}
+.project-detail-grainient{
+  z-index:-2;
+}
+.project-detail-background-mask{
+  z-index:-1;
+}
+
+/* Dock typography test: increase every project-dock label by exactly 2px. */
+.detail-brand,
+.detail-back{
+  font-size:12px;
+}
+.detail-nav-tabs .project-dock__item{
+  font-size:12px;
+}
+.project-dock__index{
+  font-size:11px;
+}
+
+@media(max-width:1100px){
+  .detail-nav-tabs .project-dock__item{font-size:11px}
+}
+
+@media(max-width:800px){
+  .detail-nav-tabs .project-dock__item{font-size:10px}
+}
