@@ -1,0 +1,15 @@
+:root{
+  --site-font-sans:Manrope,Inter,"Helvetica Neue","PingFang SC","Microsoft YaHei","Noto Sans SC",Arial,sans-serif;
+}
+
+/* Keep every visible label and control on one consistent sans-serif system. */
+html,
+body,
+body *,
+button,
+input,
+textarea,
+select,
+option{
+  font-family:var(--site-font-sans)!important;
+}

@@ -12,6 +12,7 @@ import './work-import.css'
 import './content-protection.css'
 import './profile.css'
 import './minimum-type.css'
+import './sans-fonts.css'
 import ContentProtection from './components/ContentProtection'
 
 export const metadata = {
